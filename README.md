@@ -34,7 +34,7 @@ Sample は Template の**完全な独立コピーではありません**。
 デモ実行に必要なエンジンファイル（prompts, templates, tools, AGENTS.md）と
 プロジェクト固有の設定・成果物を含みます。
 
-Template v0.1.0 向けに準備済み（2026-09-06）。リリースタグは commit/push 後に作成予定。
+本デモは **HADA_Business_Research_Template** 公開テンプレートの利用例です。
 
 ---
 
@@ -134,14 +134,17 @@ python tools/check_prompts.py
 
 ## 免責
 
-- 本デモは教育・テンプレート説明目的です
+- 本デモは教育・テンプレート説明目的の**デモンストレーション**です
 - 架空ベンダー名・模擬証拠は実在を示しません
 - 実際のベンダー選定には独自の調査と判断が必要です
+- 詳細は [DISCLAIMER.md](DISCLAIMER.md) を参照してください
 
 ---
 
 ## ライセンス
 
-Apache License 2.0 — [LICENSE](LICENSE) と [NOTICE](NOTICE) を参照。
+Apache License 2.0.
 
-NOTICE の著作権表示は確認待ちのプレースホルダーです。
+Copyright 2026 Naoki Hada.
+
+詳細は [LICENSE](LICENSE)（ライセンス全文）および [NOTICE](NOTICE)（帰属表示）を参照してください。
