@@ -94,6 +94,89 @@ def extract_wave_prefixes(config_dir: Path) -> set[str]:
     return prefixes
 
 
+def extract_rubric_dimensions(config_dir: Path) -> tuple[list[str], int | None, int | None]:
+    """Parse scoring_rubric.yaml without a YAML dependency."""
+    rubric = config_dir / "scoring_rubric.yaml"
+    if not rubric.exists():
+        return [], None, None
+
+    text = rubric.read_text(encoding="utf-8")
+    max_total: int | None = None
+    match = re.search(r"^max_total:\s*(\d+)\s*$", text, re.MULTILINE)
+    if match:
+        max_total = int(match.group(1))
+
+    dim_ids = re.findall(r"^\s*-\s*id:\s*(\S+)\s*$", text, re.MULTILINE)
+    max_points_values = [
+        int(v) for v in re.findall(r"^\s*max_points:\s*(\d+)\s*$", text, re.MULTILINE)
+    ]
+    max_points_sum = sum(max_points_values) if max_points_values else None
+
+    if max_total is not None and max_points_sum is not None and max_total != max_points_sum:
+        # Stored for caller to emit a config-level warning once.
+        pass
+
+    return dim_ids, max_total, max_points_sum
+
+
+def validate_scoring_rubric_consistency(
+    path: Path,
+    columns: list[str],
+    rows: list[dict[str, str]],
+    config_dir: Path | None,
+    result: ValidationResult,
+) -> None:
+    """Warn when score_total does not equal the sum of configured rubric dimensions."""
+    if not config_dir:
+        return
+
+    dim_ids, max_total, max_points_sum = extract_rubric_dimensions(config_dir)
+    if not dim_ids:
+        return
+
+    if max_total is not None and max_points_sum is not None and max_total != max_points_sum:
+        result.warn(
+            f"{config_dir / 'scoring_rubric.yaml'}: max_total ({max_total}) "
+            f"!= sum of dimension max_points ({max_points_sum})"
+        )
+
+    missing_cols = [dim for dim in dim_ids if dim not in columns]
+    if missing_cols:
+        result.warn(f"Scoring CSV missing rubric dimension columns: {missing_cols}")
+
+    for i, row in enumerate(rows, start=2):
+        cid = (row.get("candidate_id") or "").strip() or f"row {i}"
+        dim_sum = 0.0
+        has_dimension_value = False
+
+        for dim in dim_ids:
+            if dim not in columns:
+                continue
+            raw = (row.get(dim) or "").strip()
+            if not raw:
+                continue
+            has_dimension_value = True
+            try:
+                dim_sum += float(raw)
+            except ValueError:
+                result.error(f"{path}:{i} non-numeric dimension {dim}: {raw}")
+
+        score_raw = (row.get("score_total") or "").strip()
+        if not has_dimension_value or not score_raw:
+            continue
+
+        try:
+            score_total = float(score_raw)
+        except ValueError:
+            continue
+
+        if abs(dim_sum - score_total) > 0.01:
+            result.warn(
+                f"{path}:{i} {cid}: rubric dimension sum {dim_sum:g} "
+                f"!= score_total {score_total:g}"
+            )
+
+
 def validate_master_csv(
     path: Path, config_dir: Path | None, result: ValidationResult
 ) -> set[str]:
@@ -157,7 +240,10 @@ def validate_master_csv(
 
 
 def validate_scoring_csv(
-    path: Path, result: ValidationResult, master_ids: set[str] | None = None
+    path: Path,
+    result: ValidationResult,
+    master_ids: set[str] | None = None,
+    config_dir: Path | None = None,
 ) -> set[str]:
     scoring_ids: set[str] = set()
     if not path.exists():
@@ -210,6 +296,8 @@ def validate_scoring_csv(
             gv = (row.get(gc) or "").strip()
             if gv and gv not in GATE_STATUS:
                 result.error(f"{path}:{i} invalid {gc}: {gv}")
+
+    validate_scoring_rubric_consistency(path, columns, rows, config_dir, result)
 
     return scoring_ids
 
@@ -309,7 +397,7 @@ def main() -> int:
     if args.master:
         master_ids = validate_master_csv(args.master, args.config_dir, result)
     if args.scoring:
-        validate_scoring_csv(args.scoring, result, master_ids)
+        validate_scoring_csv(args.scoring, result, master_ids, args.config_dir)
     if args.ranking:
         validate_ranking_csv(args.ranking, result)
     for qc in args.qc_summary:

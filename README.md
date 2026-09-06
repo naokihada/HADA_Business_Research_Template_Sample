@@ -34,7 +34,7 @@ Sample は Template の**完全な独立コピーではありません**。
 デモ実行に必要なエンジンファイル（prompts, templates, tools, AGENTS.md）と
 プロジェクト固有の設定・成果物を含みます。
 
-Based on Template v0.1.0（2026-09-06 抽出）
+Template v0.1.0 向けに準備済み（2026-09-06）。リリースタグは commit/push 後に作成予定。
 
 ---
 
@@ -144,4 +144,4 @@ python tools/check_prompts.py
 
 Apache License 2.0 — [LICENSE](LICENSE) と [NOTICE](NOTICE) を参照。
 
-Copyright holder in NOTICE uses a contributor placeholder pending confirmation.
+NOTICE の著作権表示は確認待ちのプレースホルダーです。

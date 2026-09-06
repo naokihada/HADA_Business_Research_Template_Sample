@@ -75,12 +75,12 @@ Exit code 0 on pass, 1 on failure.
 - eligibility_status enum warnings
 - Numeric score_total range warning
 - QC summary qc_pass values
+- Rubric dimension sum vs score_total (when --config-dir and --scoring provided)
 
 ### Does Not Validate
 
 - Domain-specific gate semantics
 - Evidence file content
-- Rubric dimension sum vs score_total
 
 ---
 
