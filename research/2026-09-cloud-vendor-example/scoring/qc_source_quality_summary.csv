@@ -1,0 +1,5 @@
+candidate_id,qc_module,qc_pass,risk_level,confidence,last_checked,notes
+W1-001,source_quality_review,YES,LOW,HIGH,2026-09-06,Tier1 core claims
+W1-002,source_quality_review,YES,LOW,MEDIUM,2026-09-06,No Tier4-only core
+W1-003,source_quality_review,SKIPPED,LOW,HIGH,2026-09-06,NOT_ELIGIBLE
+W2-001,source_quality_review,YES,MODERATE,LOW,2026-09-06,Analyst lead; gaps remain

@@ -1,0 +1,32 @@
+# Secrets and environment
+.env
+.env.*
+*.secret.*
+*.key
+*.pem
+credentials.json
+
+# Optional local prompt-run logs
+logs/prompt-runs/*
+!logs/prompt-runs/.gitkeep
+
+# OS and editor
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+*.code-workspace
+
+# Local overrides
+config/local/
+*.local.yaml
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Cursor local state
+.cursor/**/cache/

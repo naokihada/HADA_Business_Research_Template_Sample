@@ -1,0 +1,5 @@
+candidate_id,candidate_name,slug,score_total,core_capability,security_compliance,integration_fit,cost_transparency,support_quality,gate_currently_operating,gate_core_service_match,gate_geographic_coverage,gate_enterprise_sso,gate_api_integration,gate_contract_flexibility,confidence,recommendation,shortlist_tier,qc_status,key_unknowns,last_checked
+W1-001,Nimbus Vault Backup,nimbus-vault-backup,82,26,18,17,12,9,YES,YES,YES,LIKELY,YES,YES,MEDIUM,A,TIER_1,PASS,SSO confirmation,2026-09-06
+W1-002,ArcStore Cloud,arcstore-cloud,68,24,16,8,12,8,YES,YES,YES,NO,UNKNOWN,YES,MEDIUM,B,TIER_2,PASS,API availability,2026-09-06
+W1-003,DataHaven Lite,datahaven-lite,38,12,14,2,10,0,YES,NO,YES,NO,NO,YES,HIGH,D,EXCLUDED,SKIPPED,consumer product only,2026-09-06
+W2-001,SecureLoop Backup,secureloop-backup,74,25,17,16,6,10,YES,YES,LIKELY,UNKNOWN,YES,UNKNOWN,LOW,B,TIER_2,PASS,pricing; SSO; JP coverage,2026-09-06

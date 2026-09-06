@@ -1,0 +1,5 @@
+candidate_id,candidate_name,wave_id,score_total,confidence,recommendation,shortlist_tier,final_rank
+W1-001,Nimbus Vault Backup,wave1,82,MEDIUM,A,TIER_1,1
+W2-001,SecureLoop Backup,wave2,74,LOW,B,TIER_2,2
+W1-002,ArcStore Cloud,wave1,68,MEDIUM,B,TIER_2,3
+W1-003,DataHaven Lite,wave1,38,HIGH,D,EXCLUDED,—

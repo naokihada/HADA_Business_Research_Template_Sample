@@ -1,0 +1,54 @@
+# Project Configuration — Cloud Backup Vendor Comparison (Sample Demo)
+
+project_id: 2026-09-cloud-vendor-example
+evidence_mode: simulated
+title: クラウドバックアップベンダー比較（デモ）
+title_en: Cloud Backup Vendor Comparison (Demo)
+
+objective_ja: |
+  中小規模チーム向けのクラウドバックアップサービスを比較し、
+  エビデンスに基づいて候補ベンダーを評価・選定する。
+  本プロジェクトは Sample リポジトリの架空デモです。
+
+candidate_type: vendor
+entity_types_allowed:
+  - ORGANIZATION
+  - SERVICE
+
+default_report_language: ja
+
+geographic_scope:
+  label_ja: 日本および北米でサービス提供可能なベンダー
+  regions:
+    - JP
+    - US
+  remote_acceptable: true
+
+status: ACTIVE
+
+waves:
+  - id: wave1
+    label_ja: 第1波 — 初期ディレクトリ調査
+    prefix: W1
+    source_key: vendor_directory_alpha
+    description: Fictional vendor directory import
+  - id: wave2
+    label_ja: 第2波 — 追加発見
+    prefix: W2
+    source_key: analyst_shortlist_beta
+    description: Fictional analyst shortlist discovery
+
+paths:
+  master_csv: data/master/candidates_master.csv
+  research_root: research/2026-09-cloud-vendor-example
+  config_root: config/research/2026-09-cloud-vendor-example
+
+output:
+  report_language: ja
+  ranking_csv: scoring/unified_ranking.csv
+  shortlist_md: shortlist/shortlist.md
+
+notes: |
+  SIMULATED DEMONSTRATION ONLY.
+  Fictional vendors. example.invalid URLs.
+  Not a real purchasing recommendation.

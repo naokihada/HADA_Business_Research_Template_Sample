@@ -1,0 +1,35 @@
+name: Validate Sample
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Prompt format audit
+        run: python tools/check_prompts.py --prompts-dir prompts
+
+      - name: Validate cloud vendor demonstration
+        run: |
+          python tools/validate_research_data.py \
+            --master data/master/candidates_master.csv \
+            --config-dir config/research/2026-09-cloud-vendor-example \
+            --scoring research/2026-09-cloud-vendor-example/scoring/scoring_results.csv \
+            --ranking research/2026-09-cloud-vendor-example/scoring/unified_ranking.csv \
+            --qc-summary research/2026-09-cloud-vendor-example/scoring/qc_source_quality_summary.csv
+
+      - name: Check for Windows absolute paths in rules and prompts
+        run: |
+          if grep -rE '[A-Za-z]:\\' .cursor/rules prompts 2>/dev/null; then
+            echo "Found absolute Windows paths"
+            exit 1
+          fi
+          echo "No absolute Windows paths found"
