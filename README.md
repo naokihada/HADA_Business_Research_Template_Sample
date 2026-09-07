@@ -4,7 +4,7 @@
 
 The scenario is a **fictional cloud backup vendor comparison** with simulated evidence. It is not a recommendation of real vendors. Do not use it as a basis for purchase decisions.
 
-Japanese information is available further down this page.
+日本語の情報は、このページの下にあります。
 
 | | |
 |---|---|
